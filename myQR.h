@@ -1,16 +1,20 @@
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
-#define ACCURACY 2 //accuratezza nelle stampe
+#define ACCURACY 5 //accuratezza nelle stampe
 #define IDX(i, j, ld) ((j * ld) + i) //le matrici sono allocate linearmente per colonna
 
-void initMat(float *matrix, int M, int N);
-void printLinMat(float *mat, int m, int n);
-void printMat(float *matrix, int M, int N, int acc);
-void QRdec(float *A, float *Q, float *R, int M, int N);
-void copyMat(float *X, float *Y, int M, int N);
-void prodMat(float *A, float *B, float *C, int m, int n, int p);
-float *tranMat(float *mat, int m, int n);
-void difMat(float *A, float *B, int m, int n, int acc);
+void initMat(double *matrix, int M, int N);
+void printLinMat(double *mat, int m, int n);
+void printMat(double *matrix, int M, int N, int acc);
+void QRdec(double *A, double *Q, double *R, int M, int N);
+void copyMat(double *X, double *Y, int M, int N);
+void prodMat(double *A, double *B, double *C, int m, int n, int p);
+double *tranMat(double *mat, int m, int n);
+void difMat(double *A, double *B, int m, int n, int acc);
 
 
 /*More precisely, the first column is normalized, and its
@@ -30,7 +34,7 @@ sono già ortonormali.
 
 */
 
-void QRdec(float *A, float *Q, float *R, int M, int N)
+void QRdec(double *A, double *Q, double *R, int M, int N)
 {
     int i, j, k;
     for (i = 0; i < N; i++)
@@ -47,25 +51,28 @@ void QRdec(float *A, float *Q, float *R, int M, int N)
             R[IDX(i, j, N)] = R[IDX(i, j, N)] / R[IDX(i, i, N)];
 
         for (j = i + 1; j < N; j++)
-            for (k = 0; k < M; k++)
+            for (k = 0; k < M; k++){
                 Q[IDX(k, j, M)] = Q[IDX(k, j, M)] - Q[IDX(k, i, M)] * R[IDX(i, j, N)];
+            }
     }
 }
-void initMat(float *matrix, int M, int N)
+void initMat(double *matrix, int M, int N)
 {
     int i;
+    //srand(time(NULL));
     for (i = 0; i < M * N; i++)
-        matrix[i] = ((float)rand() / (RAND_MAX)); // casuali intervallo [0 - 1]
+        matrix[i] = ((double)rand() / (RAND_MAX)); // casuali intervallo [0 - 1]
 }
 
-void copyMat(float *X, float *Y, int M, int N)
+
+void copyMat(double *X, double *Y, int M, int N)
 {
     int i;
     for (i = 0; i < M * N; i++)
         Y[i] = X[i];
 }
 
-void printMat(float *matrix, int M, int N, int acc)
+void printMat(double *matrix, int M, int N, int acc)
 {
     int i, j;
     for (i = 0; i < M; i++)
@@ -78,7 +85,7 @@ void printMat(float *matrix, int M, int N, int acc)
     printLinMat(matrix, M, N);*/
 }
 
-void prodMat(float *A, float *B, float *C, int m, int n, int p)
+void prodMat(double *A, double *B, double *C, int m, int n, int p)
 {
     int i, j, k;
     for (i = 0; i < m; i++)
@@ -91,10 +98,10 @@ void prodMat(float *A, float *B, float *C, int m, int n, int p)
         }
 }
 
-float *tranMat(float *mat, int m, int n)
+double *tranMat(double *mat, int m, int n)
 {
     int i, j;
-    float *matT = (float *)calloc(n * m, sizeof(float));
+    double *matT = (double *)calloc(n * m, sizeof(double));
     for (i = 0; i < m; i++)
     {
         for (j = 0; j < n; j++)
@@ -105,7 +112,7 @@ float *tranMat(float *mat, int m, int n)
     return matT;
 }
 
-void difMat(float *A, float *B, int m, int n, int acc)
+void difMat(double *A, double *B, int m, int n, int acc)
 {
     int i, j;
     for (i = 0; i < m; i++)
@@ -119,7 +126,7 @@ void difMat(float *A, float *B, int m, int n, int acc)
     }
 }
 
-void printLinMat(float *mat, int m, int n)
+void printLinMat(double *mat, int m, int n)
 {
     int i;
     for (i = 0; i < n * m; i++)
