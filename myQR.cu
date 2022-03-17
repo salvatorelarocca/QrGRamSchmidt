@@ -50,7 +50,7 @@ int main(int argn, char *argv[])
     cudaEventCreate(&stop);
 
     cudaEventRecord(start, 0);
-    QRdec(A, Q, R, M, N);
+    QRdec(Q, R, M, N);
     cudaEventRecord(stop, 0);
     cudaEventSynchronize(stop);
     cudaEventElapsedTime(&time, start, stop);

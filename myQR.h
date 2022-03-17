@@ -10,7 +10,7 @@
 void initMat(double *matrix, int M, int N);
 void printLinMat(double *mat, int m, int n);
 void printMat(double *matrix, int M, int N, int acc);
-void QRdec(double *A, double *Q, double *R, int M, int N);
+void QRdec(double *Q, double *R, int M, int N);
 void copyMat(double *X, double *Y, int M, int N);
 void prodMat(double *A, double *B, double *C, int m, int n, int p);
 double *tranMat(double *mat, int m, int n);
@@ -34,7 +34,7 @@ sono già ortonormali.
 
 */
 
-void QRdec(double *A, double *Q, double *R, int M, int N)
+void QRdec(double *Q, double *R, int M, int N)
 {
     int i, j, k;
     for (i = 0; i < N; i++)
